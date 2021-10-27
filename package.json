@@ -1,0 +1,27 @@
+{
+  "name": "@daoswapdex-heco-testnet/core-staking-rewards",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "StakingRewards contracts for the Daoswap protocol",
+  "repository": "https://github.com/daoswapdex-heco-testnet/core-staking-rewards",
+  "keywords": [
+    "uniswap",
+    "daoswap",
+    "ethereum"
+  ],
+  "scripts": {
+    "test": "node script/test.js",
+    "migrate": "node script/migrate.js"
+  },
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.1.1",
+    "inquirer": "^7.3.3",
+    "truffle": "5.1.48"
+  },
+  "devDependencies": {
+    "@openzeppelin/test-environment": "^0.1.6",
+    "@openzeppelin/test-helpers": "^0.5.9",
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  }
+}
