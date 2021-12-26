@@ -1,9 +1,9 @@
 {
-  "name": "@daoswapdex-heco-testnet/core-staking-rewards",
+  "name": "@daoswapdex/core-staking-rewards",
   "version": "1.0.0",
   "license": "MIT",
   "description": "StakingRewards contracts for the Daoswap protocol",
-  "repository": "https://github.com/daoswapdex-heco-testnet/core-staking-rewards",
+  "repository": "https://github.com/daoswapdex/core-staking-rewards",
   "keywords": [
     "uniswap",
     "daoswap",
