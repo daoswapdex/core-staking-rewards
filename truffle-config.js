@@ -1,18 +1,44 @@
 const fs = require('fs');
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const mnemonic = fs.readFileSync(".mnemonic").toString().trim();
+const mnemonicTestnet = fs.readFileSync("../mnemonic/.mnemonic-testnet").toString().trim();
+const mnemonicMainnet = fs.readFileSync("../mnemonic/.mnemonic-mainnet").toString().trim();
 
 module.exports = {
   networks: {
-    testnet: {
-      provider: () => new HDWalletProvider(mnemonic, 'https://http-testnet.hecochain.com'),
+    hecotestnet: {
+      provider: () => new HDWalletProvider(mnemonicTestnet, 'https://http-testnet.hecochain.com'),
       network_id: 256,
-      // from: '0x25067E8678203d841aA05BBc19acb1A098E1c50c',
+      // from: '0xa9bB710996d6ed61B83a5EAB583bAe683199c2de',        // Account to send txs from (default: accounts[0])
+      // gas: 550000,        // Ropsten has a lower block limit than mainnet
+      // gasPrice: 20000000000,  // 20 gwei (in wei) (default: 100 gwei)
+      // confirmations: 2,    // # of confs to wait between deployments. (default: 0)
+      // timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+      // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
     },
-    mainnet: {
-      provider: () => new HDWalletProvider(mnemonic, 'https://http-mainnet.hecochain.com'),
+    hecomainnet: {
+      provider: () => new HDWalletProvider(mnemonicMainnet, 'https://http-mainnet.hecochain.com'),
       network_id: 128,
+      // from: '0xa9bB710996d6ed61B83a5EAB583bAe683199c2de',        // Account to send txs from (default: accounts[0])
+      // gas: 5500000,        // Ropsten has a lower block limit than mainnet
+      // gasPrice: 20000000000,  // 20 gwei (in wei) (default: 100 gwei)
+      // confirmations: 2,    // # of confs to wait between deployments. (default: 0)
+      // timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+      // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+    },
+    bsctestnet: {
+      provider: () => new HDWalletProvider(mnemonicTestnet, `https://data-seed-prebsc-1-s1.binance.org:8545`),
+      network_id: 97,
+      // confirmations: 10,
+      // timeoutBlocks: 200,
+      // skipDryRun: true
+    },
+    bscmainnet: {
+      provider: () => new HDWalletProvider(mnemonicMainnet, `https://bsc-dataseed1.binance.org`),
+      network_id: 56,
+      // confirmations: 10,
+      // timeoutBlocks: 200,
+      // skipDryRun: true
     }
   },
 
