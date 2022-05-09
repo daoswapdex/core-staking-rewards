@@ -526,6 +526,8 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
 
+    address[] private _accountList;
+
     /* ========== CONSTRUCTOR ========== */
 
     constructor(
@@ -570,12 +572,18 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
         return rewardRate.mul(rewardsDuration);
     }
 
+    function getAccountList() external view returns (address[] memory) {
+        return _accountList;
+    }
+
     /* ========== MUTATIVE FUNCTIONS ========== */
 
     function stakeWithPermit(uint256 amount, uint deadline, uint8 v, bytes32 r, bytes32 s) external nonReentrant updateReward(msg.sender) {
         require(amount > 0, "Cannot stake 0");
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
+
+        _accountList.push(msg.sender);
 
         // permit
         IUniswapV2ERC20(address(stakingToken)).permit(msg.sender, address(this), amount, deadline, v, r, s);
