@@ -527,6 +527,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
     mapping(address => uint256) private _balances;
 
     address[] private _accountList;
+    mapping(address => bool) private _accountMap;
 
     /* ========== CONSTRUCTOR ========== */
 
@@ -578,12 +579,31 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
 
     /* ========== MUTATIVE FUNCTIONS ========== */
 
+    function _recordAccountOfStake(address account) internal {
+        if (!_accountMap[account]) {
+            _accountList.push(account);
+            _accountMap[account] = true;
+        }
+    }
+    function _removeAccountOfStake(address account) internal {
+        if (_accountMap[account]) {
+            for (uint256 i = 0; i < _accountList.length; i++) {
+                if (_accountList[i] == account) {
+                    _accountList[i] = _accountList[_accountList.length - 1];
+                    _accountMap[account] = false;
+                    _accountList.pop();
+                    break;
+                }
+            }
+        }
+    }
+
     function stakeWithPermit(uint256 amount, uint deadline, uint8 v, bytes32 r, bytes32 s) external nonReentrant updateReward(msg.sender) {
         require(amount > 0, "Cannot stake 0");
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
 
-        _accountList.push(msg.sender);
+        _recordAccountOfStake(msg.sender);
 
         // permit
         IUniswapV2ERC20(address(stakingToken)).permit(msg.sender, address(this), amount, deadline, v, r, s);
@@ -596,6 +616,9 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
         require(amount > 0, "Cannot stake 0");
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
+
+        _recordAccountOfStake(msg.sender);
+
         stakingToken.safeTransferFrom(msg.sender, address(this), amount);
         emit Staked(msg.sender, amount);
     }
@@ -620,6 +643,8 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
     function exit() external {
         withdraw(_balances[msg.sender]);
         getReward();
+        
+        _removeAccountOfStake(msg.sender);
     }
 
     /* ========== RESTRICTED FUNCTIONS ========== */
