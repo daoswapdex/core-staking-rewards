@@ -3,6 +3,7 @@ const fs = require('fs');
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 const mnemonicTestnet = fs.readFileSync("../mnemonic/.mnemonic-testnet").toString().trim();
 const mnemonicMainnet = fs.readFileSync("../mnemonic/.mnemonic-mainnet").toString().trim();
+const apiKeysBscscan = fs.readFileSync("../mnemonic/.api_keys_bscscan").toString().trim();
 
 module.exports = {
   networks: {
@@ -46,6 +47,12 @@ module.exports = {
   // Set default mocha options here, use special reporters etc.
   mocha: {
     // timeout: 100000
+  },
+
+  plugins: ['truffle-plugin-verify'],
+  api_keys: {
+    bscscan: apiKeysBscscan,
+    hecoinfo: ''
   },
 
   // Configure your compilers
