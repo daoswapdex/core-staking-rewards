@@ -36,7 +36,8 @@ module.exports = {
     },
     bscmainnet: {
       // provider: () => new HDWalletProvider(mnemonicMainnet, `https://bsc-dataseed1.binance.org`),
-      provider: () => new HDWalletProvider(mnemonicMainnet, `https://bsc-dataseed1.ninicoin.io`),
+      // provider: () => new HDWalletProvider(mnemonicMainnet, `https://bsc-dataseed1.ninicoin.io`),
+      provider: () => new HDWalletProvider(mnemonicMainnet, `https://bsc-dataseed2.defibit.io`),
       network_id: 56,
       // confirmations: 10,
       // timeoutBlocks: 200,
