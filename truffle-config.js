@@ -39,6 +39,8 @@ module.exports = {
       // provider: () => new HDWalletProvider(mnemonicMainnet, `https://bsc-dataseed1.ninicoin.io`),
       provider: () => new HDWalletProvider(mnemonicMainnet, `https://bsc-dataseed2.defibit.io`),
       network_id: 56,
+      gas: 60000000,
+      gasPrice: 3000000000,  // 20 gwei (in wei) (default: 100 gwei)
       // confirmations: 10,
       // timeoutBlocks: 200,
       // skipDryRun: true
